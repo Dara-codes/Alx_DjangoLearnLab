@@ -4,7 +4,7 @@ from django.views.generic import DetailView
 from .models import Library
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -26,12 +26,12 @@ class LibraryDetailView(DetailView):
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             return redirect('login')
     else:
-        form = UserRegisterForm()
+        form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
