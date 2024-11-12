@@ -26,12 +26,12 @@ class LibraryDetailView(DetailView):
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             return redirect('login')
     else:
-        form = UserRegisterForm()
+        form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
