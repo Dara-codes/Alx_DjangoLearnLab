@@ -11,7 +11,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 
 from django.http import HttpResponse
-
+UserCreationForm()
 def home(request):
     return HttpResponse("<h1>Welcome to the Library Project</h1><p>Use the navigation to view books or library details.</p>")
 
