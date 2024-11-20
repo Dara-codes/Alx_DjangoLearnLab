@@ -16,3 +16,11 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['email', 'password1', 'password2', 'first_name', 'last_name', 'date_of_birth', 'profile_photo']
+
+from django import forms
+from .models import Book
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author']
