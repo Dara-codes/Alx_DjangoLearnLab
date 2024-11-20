@@ -40,6 +40,11 @@ class BookSearchForm(forms.Form):
         """Additional cleaning/sanitization of search query."""
         query = self.cleaned_data.get('search_query', '')
         return escape(query.strip())
+    
+    class ExampleForm(forms.Form):
+       name = forms.CharField(max_length=100)
+       email = forms.EmailField()
+       message = forms.CharField(widget=forms.Textarea)
 
 class BookForm(forms.ModelForm):
     class Meta:
