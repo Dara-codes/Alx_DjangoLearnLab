@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from .forms import BookSearchForm, BookForm
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
+from .forms import ExampleForm
 
 @login_required
 @csrf_protect
@@ -79,3 +80,20 @@ def book_delete(request, pk):
         messages.success(request, 'Book deleted successfully!')
         return redirect('book_list')
     return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
+
+def book_search(request):
+    form = BookSearchForm(request.GET or None)
+    books = []
+    
+    if form.is_valid():
+        query = form.cleaned_data.get('query', '')
+        books = Book.objects.filter(title__icontains=query)
+    
+    return render(request, 'bookshelf/book_list.html', {
+        'books': books,
+        'form': form
+    })
+
+def example_form_view(request):
+    form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})
