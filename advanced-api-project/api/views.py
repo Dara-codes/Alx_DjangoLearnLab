@@ -1,3 +1,4 @@
+from warnings import filters
 from rest_framework import generics
 from .models import Book
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -14,6 +15,7 @@ class BookListView(generics.ListAPIView):
 
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     search_fields = ['title', 'author']
+    filter_backends = [filters.OrderingFilter]
     ordering_fields = ['title', 'publication_year']
     ordering = ['title'] 
 
