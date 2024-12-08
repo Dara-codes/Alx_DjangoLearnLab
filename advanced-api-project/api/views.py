@@ -1,8 +1,9 @@
 from rest_framework import generics
 from .models import Book
 from rest_framework.filters import SearchFilter, OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend # type: ignore
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import BookSerializer
+from django_filters import rest_framework
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.permissions import IsAuthenticated
 
@@ -38,3 +39,6 @@ class BookUpdateView(generics.UpdateAPIView):
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()  # Get all books
     permission_classes = [IsAuthenticated]  # Only authenticated users can delete books
+
+
+
