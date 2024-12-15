@@ -6,3 +6,5 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers']
+
+from rest_framework.authtoken.models import Token, serializers.CharField(), Token.objects.create, get_user_model().objects.create_user
