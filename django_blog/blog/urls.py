@@ -20,7 +20,5 @@ urlpatterns = [
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
     path('search/', views.search, name='search'),
-    path('tag/<slug:slug>/', PostListView.as_view(), name='posts-by-tag'),
+    path('tag/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'), # type: ignore
 ]
-
-
