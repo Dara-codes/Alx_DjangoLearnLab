@@ -33,14 +33,20 @@ class FeedView(generics.ListAPIView):
         following_users = user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
+from rest_framework import status, generics, permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
+from .models import Post, Like
+from .serializers import LikeSerializer
+from notifications.models import Notification
+from accounts.models import CustomUser
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
-def like_post(request, post_id):
-    try:
-        post = Post.objects.get(id=post_id)
-    except Post.DoesNotExist:
-        return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
-
+def like_post(request, pk):
+    post = generics.get_object_or_404(Post, pk=pk)
+    
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if created:
         Notification.objects.create(
@@ -55,12 +61,9 @@ def like_post(request, post_id):
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
-def unlike_post(request, post_id):
-    try:
-        post = Post.objects.get(id=post_id)
-    except Post.DoesNotExist:
-        return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
-
+def unlike_post(request, pk):
+    post = generics.get_object_or_404(Post, pk=pk)
+    
     try:
         like = Like.objects.get(user=request.user, post=post)
         like.delete()
