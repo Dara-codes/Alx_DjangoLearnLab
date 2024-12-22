@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import CustomUser
 
 
-class RegisterView(generics.CreateAPIView):
+class RegisterView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     permission_classes = [permissions.AllowAny]
